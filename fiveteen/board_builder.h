@@ -17,15 +17,14 @@ public:
     BoardBuilder(QQmlEngine* engine) :
         component(new QQmlComponent(engine, QUrl("qrc:qml/cell.qml"))) {}
 
-    QList<Cell*> build(const Board& board) {
-        QList<Cell*> out;
+    QList<QQuickItem*> build(const Board& board) {
+        QList<QQuickItem*> out;
 
         int height = 3;
         int width = 3;
         for(int i = 0; i <= height; i++) {
             for(int j = 0; j <= width; j++) {
-                Cell* cell = dynamic_cast<Cell*>(component->create());
-                cell->setNumber(board[i][j]);
+                QQuickItem* cell = qobject_cast<QQuickItem*>(component->create());
                 out.append(cell);
             }
         }

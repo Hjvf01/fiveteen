@@ -25,8 +25,8 @@ int main(int argc, char *argv[]) {
 
     BoardBuilder builder(view.engine());
     Board board(_board);
-    QList<Cell*> cells = builder.build(board);
-    for(Cell* cell: cells)
+    auto cells = builder.build(board);
+    for(auto* cell: cells)
         cout << cell << endl;
 
     return app.exec();
