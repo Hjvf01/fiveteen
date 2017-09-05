@@ -17,9 +17,7 @@ Item {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: {
-                mouseClicked(mouse.x, mouse.y);
-            }
+            onClicked: mouseClicked(mouse.x, mouse.y);
         }
     }
 }

@@ -19,6 +19,8 @@ int main(int argc, char *argv[]) {
 
     QQuickView view;
     view.setSource(QUrl("qrc:qml/main.qml"));
+    view.setX(55);
+    view.setY(55);
     view.show();
 
     GameHandler handler(&view);

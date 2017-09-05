@@ -5,7 +5,10 @@ CONFIG += c++11
 
 SOURCES += main.cpp \
     game_handler.cpp \
-    board_handler.cpp
+    board_handler.cpp \
+    board.cpp \
+    board_builder.cpp \
+    cell.cpp
 
 RESOURCES += qml.qrc
 

@@ -49,26 +49,21 @@ Cell {
         objectName: "control"
 
         onMoveUp: {
-            console.log("move up");
             moveUp.to = cell.y - control.step;
             moveUp.restart();
         }
 
         onMoveLeft: {
-            console.log("move left");
             moveLeft.to = cell.x + control.step;
             moveLeft.restart();
         }
 
         onMoveDown: {
-            console.log("move down");
             moveDown.to = cell.y + control.step
-            console.log(moveDown.to);
             moveDown.restart();
         }
 
         onMoveRight: {
-            console.log("move right");
             moveRight.to = cell.x - control.step;
             moveRight.restart();
         }

@@ -96,6 +96,20 @@ Cell* BoardHandler::getZero() const {
 }
 
 
+void BoardHandler::swap(Cell *selected, Cell *zero) {
+    int selected_row = findRow(selected->getNumber().toInt()),
+        selected_col = findCol(selected->getNumber().toInt());
+
+    int zero_row = findRow(zero->getNumber().toInt()),
+        zero_col = findCol(zero->getNumber().toInt());
+
+    board.swap(
+        selected_row, selected_col,
+        zero_row, zero_col
+    );
+}
+
+
 ostream& operator << (ostream& os, const Direction& dir) {
     switch(dir) {
         case Direction::stop: return os << "stop";

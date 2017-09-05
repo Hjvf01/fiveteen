@@ -26,16 +26,9 @@ void GameHandler::initBoard(void) {
 
 
 void GameHandler::onMouseClicked(int x, int y) {
-    qDebug() << x << "\t" << y;
-
     Cell* selected = board->findCell(QPoint(x, y));
-    if(selected != nullptr) {
-        qDebug() << selected->getNumber();
-        qDebug() << selected->cellRect();
-        move(selected);
-    } else {
-        qDebug() << "didt find";
-    }
+    assert(selected != nullptr);
+    move(selected);
 }
 
 
@@ -50,24 +43,24 @@ void GameHandler::move(Cell* selected) {
     auto direction = board->getDirection(selected->getNumber());
     switch(direction) {
     case Direction::up:
-        //board->swap(selected);
+        board->swap(selected, zero);
         emit control->moveUp();
         emit zero_control->moveDown();
         break;
     case Direction::left:
-        //board->swap(selected);
+        board->swap(selected, zero);
         emit control->moveLeft();
         emit zero_control->moveRight();
         break;
     case Direction::down:
-        //board->swap(selected);
+        board->swap(selected, zero);
         emit control->moveDown();
         emit zero_control->moveUp();
         break;
     case Direction::right:
-        //board->swap(selected);
+        board->swap(selected, zero);
         emit control->moveRight();
-        emit control->moveLeft();
+        emit zero_control->moveLeft();
         break;
     default:
         return;

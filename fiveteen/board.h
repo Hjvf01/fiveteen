@@ -20,53 +20,24 @@ class Board {
     QList<QList<int>> board;
 
 public:
-    Board(const QList<QList<int>>& _board) : board(_board) {
-        cout << __PRETTY_FUNCTION__ << endl;
+    Board(const QList<QList<int>>& _board);
+    Board();
+    ~Board();
 
-        assert(_board.size() == 4);
-        for(int i = 0; i < _board.size(); i++)
-            assert(_board[i].size() == 4);
-    }
+    const QList<int>& operator [] (const unsigned int index) const;
 
 
-    Board() {
-        board = {
-            { 1,  2,  3,  4},
-            { 5,  6,  7,  8},
-            { 9, 10, 11, 12},
-            {13, 14, 15,  0}
-        };
-    }
-
-
-    ~Board() {
-        cout << __PRETTY_FUNCTION__ << endl;
-    }
-
-    const QList<int>& operator [] (unsigned int index) const {
-        assert(index <= 3);
-
-        return board[index];
-    }
-
-
-    string str(void) const {
-        string out;
-        for(const QList<int>& row: board) {
-            for(int elem: row) {
-                if(elem < 10)
-                    out += " " + to_string(elem) + " ";
-                else
-                    out += to_string(elem) + " ";
-            }
-            out += "\n";
-        }
-
-        return out;
-    }
+    string str(void) const;
 
     int height(void) const { return board.size(); }
     int width(void) const { return board[0].size(); }
+
+    void swap(int left_row, int left_col, int right_row, int right_col);
+
+
+    friend ostream& operator << (ostream& os, const Board& board) {
+        return os << board.str();
+    }
 
 
     friend bool operator == (const Board& left, const Board& right) {
@@ -85,13 +56,7 @@ public:
 
         return true;
     }
-
-
-    friend ostream& operator << (ostream& os, const Board& board) {
-        return os << board.str();
-    }
 };
-
 
 
 #endif // BOARD_H

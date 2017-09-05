@@ -8,7 +8,13 @@
 class CellControl : public QObject {
     Q_OBJECT
 
-    Q_PROPERTY(int duration READ getDuration WRITE setDuration)
+    Q_PROPERTY(
+        int duration
+        READ getDuration
+        WRITE setDuration
+        NOTIFY durationChanged
+    )
+
     Q_PROPERTY(int step READ getStep)
 
     int _duration = 200;
@@ -22,6 +28,8 @@ signals:
 
     void select(void);
     void unSelect(void);
+
+    void durationChanged(int d);
 
 public:
     int getDuration(void) const { return _duration; }

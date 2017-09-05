@@ -50,6 +50,8 @@ public:
     Cell* findCell(const QPoint& point) const;
     Cell* getZero(void) const;
 
+    void swap(Cell* selected, Cell* zero);
+
 private:
     int findRow(int number) const;
     int findCol(int number) const;
