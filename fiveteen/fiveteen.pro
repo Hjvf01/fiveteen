@@ -31,5 +31,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     board.h \
+    cell.h \
     board_builder.h \
-    cell.h
+    game_handler.h

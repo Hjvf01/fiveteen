@@ -5,7 +5,7 @@ CONFIG += c++11
 
 SOURCES += main.cpp
 HEADERS += \
-    ../../fiveteen/board_builder.h\
+    #../../fiveteen/board_builder.h\
     ../../fiveteen/cell.h
 
 RESOURCES += qml.qrc

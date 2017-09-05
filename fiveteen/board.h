@@ -57,6 +57,9 @@ public:
         return out;
     }
 
+    int height(void) const { return board.size(); }
+    int width(void) const { return board[0].size(); }
+
 
     friend ostream& operator << (ostream& os, const Board& board) {
         return os << board.str();

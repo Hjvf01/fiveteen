@@ -38,6 +38,10 @@ public:
         number = QString::number(_number);
     }
 
+    QString getNumber(void) const {
+        return number;
+    }
+
     void paint(QPainter *painter) override {
         cout << __PRETTY_FUNCTION__ << endl;
 

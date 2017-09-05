@@ -2,39 +2,42 @@
 #define BOARD_BUILDER_H
 
 
-#include <QtQml/QQmlComponent>
-#include <QtQml/QQmlEngine>
+#include <QQmlEngine>
+#include <QQmlComponent>
+#include <QUrl>
+#include <QDebug>
 
-
-#include "board.h"
 #include "cell.h"
 
 
 class BoardBuilder {
-    QQmlComponent* component;
+    QQmlComponent* cell;
 
 public:
-    BoardBuilder(QQmlEngine* engine) :
-        component(new QQmlComponent(engine, QUrl("qrc:qml/cell.qml"))) {}
-
-    QList<QQuickItem*> build(const Board& board) {
-        QList<QQuickItem*> out;
-
-        int height = 3;
-        int width = 3;
-        for(int i = 0; i <= height; i++) {
-            for(int j = 0; j <= width; j++) {
-                QQuickItem* cell = qobject_cast<QQuickItem*>(component->create());
-                out.append(cell);
-            }
-        }
-        return out;
+    BoardBuilder(QQmlEngine* engine) {
+        cell = new QQmlComponent(engine, QUrl("qrc:qml/cell.qml"));
     }
 
     ~BoardBuilder() {
-        delete component;
+        delete cell;
+    }
+
+
+    QList<Cell*> build(const Board& board) {
+        QList<Cell*> result;
+        for(int i = 0; i < board.height(); i++) {
+            for(int j = 0; j < board.width(); j++) {
+                Cell* cell_obj = dynamic_cast<Cell*>(cell->create());
+                qDebug() << cell_obj;
+                cell_obj->setNumber(board[i][j]);
+                cell_obj->setX(j * cell_size);
+                cell_obj->setY(i * cell_size);
+                result.append(cell_obj);
+            }
+        }
+
+        return result;
     }
 };
-
 
 #endif // BOARD_BUILDER_H
