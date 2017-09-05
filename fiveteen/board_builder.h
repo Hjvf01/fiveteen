@@ -43,7 +43,7 @@ public:
                 result.append(cell_obj);
 
                 if(board[i][j] == 0)
-                    cell_obj->setColor(QColor(0, 0, 0));
+                    cell_obj->setColor(QColor(0, 0, 0, 0));
             }
         }
 

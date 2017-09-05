@@ -2,6 +2,10 @@
 #define GAME_HANDLER_H
 
 
+#include <ostream>
+using std::ostream;
+
+
 #include <QObject>
 #include <QQuickView>
 #include <QQuickItem>
@@ -14,7 +18,16 @@
 #include "cell.h"
 
 
-class GameHandler : public QObject {
+enum class Direction {
+    stop = 0,
+    up = 1,
+    left = 2,
+    down = 3,
+    right = 4
+};
+
+
+class BoardHandler : public QObject {
     Q_OBJECT
 
     QQuickView* view;
@@ -24,8 +37,32 @@ class GameHandler : public QObject {
     Board board;
     BoardBuilder builder;
 
-    Cell* selected = nullptr;
     QList<Cell*> cells;
+
+public:
+    BoardHandler(QQuickView* _view);
+    ~BoardHandler() override;
+
+    void init(void);
+
+    Direction getDirection(const QString& num) const;
+
+    Cell* findCell(const QPoint& point) const;
+    Cell* getZero(void) const;
+
+private:
+    int findRow(int number) const;
+    int findCol(int number) const;
+};
+
+
+class GameHandler : public QObject {
+    Q_OBJECT
+
+    QQuickView* view;
+    BoardHandler* board;
+
+    Cell* zero = nullptr;
 
 public:
     GameHandler(QQuickView* _view);
@@ -37,8 +74,7 @@ public slots:
     void onMouseClicked(int x, int y);
 
 private:
-    Cell* findCell(const QPoint& point) const;
-    void move(CellControl* control);
+    void move(Cell* selected);
 };
 
 

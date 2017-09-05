@@ -63,6 +63,7 @@ Cell {
         onMoveDown: {
             console.log("move down");
             moveDown.to = cell.y + control.step
+            console.log(moveDown.to);
             moveDown.restart();
         }
 

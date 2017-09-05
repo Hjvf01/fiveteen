@@ -24,7 +24,8 @@ public:
         cout << __PRETTY_FUNCTION__ << endl;
 
         assert(_board.size() == 4);
-        assert(_board[0].size() == 4);
+        for(int i = 0; i < _board.size(); i++)
+            assert(_board[i].size() == 4);
     }
 
 
@@ -66,6 +67,24 @@ public:
 
     int height(void) const { return board.size(); }
     int width(void) const { return board[0].size(); }
+
+
+    friend bool operator == (const Board& left, const Board& right) {
+        assert(left.board.size() == right.board.size());
+        for(int i = 0; i < left.board.size(); ++i)
+            assert(left[i].size() == right[i].size());
+
+        int height = left.board.size();
+        for(int row = 0; row < height; ++row) {
+            int width = right.board[row].size();
+            for(int col = 0; col < width; ++col) {
+                if(left[row][col] != right[row][col])
+                    return false;
+            }
+        }
+
+        return true;
+    }
 
 
     friend ostream& operator << (ostream& os, const Board& board) {

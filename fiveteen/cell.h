@@ -59,11 +59,13 @@ public:
         painter->setBrush(QBrush(color));
         painter->drawRect(cell);
 
-        painter->setBrush(QBrush(Qt::black));
-        QFont font = painter->font();
-        font.setPixelSize(CELL_SIZE - 15);
-        painter->setFont(font);
-        painter->drawText(cell, Qt::AlignCenter, number);
+        if(number != "0") {
+            painter->setBrush(QBrush(Qt::black));
+            QFont font = painter->font();
+            font.setPixelSize(CELL_SIZE - 15);
+            painter->setFont(font);
+            painter->drawText(cell, Qt::AlignCenter, number);
+        }
     }
 
     QRect cellRect(void) const {

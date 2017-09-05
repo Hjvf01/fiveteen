@@ -4,7 +4,8 @@ QT += qml quick
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    game_handler.cpp
+    game_handler.cpp \
+    board_handler.cpp
 
 RESOURCES += qml.qrc
 
