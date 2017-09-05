@@ -3,7 +3,8 @@ TEMPLATE = app
 QT += qml quick
 CONFIG += c++11
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    game_handler.cpp
 
 RESOURCES += qml.qrc
 
@@ -33,4 +34,5 @@ HEADERS += \
     board.h \
     cell.h \
     board_builder.h \
-    game_handler.h
+    game_handler.h \
+    cell_control.h
