@@ -2,10 +2,10 @@
 #define BOARD_BUILDER_H
 
 
-#include <QQmlEngine>
-#include <QQmlComponent>
-#include <QUrl>
-#include <QDebug>
+#include <QtQml/QQmlEngine>
+#include <QtQml/QQmlComponent>
+#include <QtCore/QUrl>
+#include <QtCore/QDebug>
 
 #include "cell.h"
 #include "board.h"

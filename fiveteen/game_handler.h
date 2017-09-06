@@ -15,7 +15,9 @@ using std::ostream;
 #include "board.h"
 #include "board_builder.h"
 #include "cell_control.h"
+#include "game_control.h"
 #include "cell.h"
+#include "board_maker.h"
 
 
 enum class Direction {
@@ -35,6 +37,7 @@ class BoardHandler : public QObject {
     QQmlEngine* engine;
 
     Board board;
+    Board final;
     BoardBuilder builder;
 
     QList<Cell*> cells;
@@ -52,6 +55,8 @@ public:
 
     void swap(Cell* selected, Cell* zero);
 
+    bool finish(void);
+
 private:
     int findRow(int number) const;
     int findCol(int number) const;
@@ -61,8 +66,11 @@ private:
 class GameHandler : public QObject {
     Q_OBJECT
 
+    int amount;
+
     QQuickView* view;
     BoardHandler* board;
+    GameControl* main_control;
 
     Cell* zero = nullptr;
 

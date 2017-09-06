@@ -3,12 +3,25 @@
 
 GameHandler::GameHandler(QQuickView *_view) :
         QObject(),
+        amount(0),
         view(_view),
-        board(new BoardHandler(_view))
+        board(new BoardHandler(_view)),
+        main_control(
+            view->rootObject()->findChild<GameControl*>("game_control")
+        )
 {
+    assert(main_control != nullptr);
+
     connect(
         view->rootObject(), SIGNAL(mouseClicked(int, int)),
         this, SLOT(onMouseClicked(int,int))
+    );
+
+    connect(
+        view, &QQuickView::heightChanged, [](int h) { qDebug() << h; }
+    );
+    connect(
+        view, &QQuickView::widthChanged, [](int w) { qDebug() << w; }
     );
 }
 
@@ -40,6 +53,8 @@ void GameHandler::move(Cell* selected) {
     assert(zero != nullptr);
     assert(zero_control != nullptr);
 
+    ++amount;
+
     auto direction = board->getDirection(selected->getNumber());
     switch(direction) {
     case Direction::up:
@@ -63,6 +78,10 @@ void GameHandler::move(Cell* selected) {
         emit zero_control->moveLeft();
         break;
     default:
-        return;
+        break;
+    }
+
+    if(board->finish()) {
+        emit main_control->finish(amount);
     }
 }

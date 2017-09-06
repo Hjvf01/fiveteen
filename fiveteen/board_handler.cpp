@@ -8,6 +8,12 @@ BoardHandler::BoardHandler(QQuickView *_view) :
         engine(view->engine())
 {
     builder.setBuilder(engine);
+
+    QList<QList<int>> _board = make_board();
+    while(! solvable(_board))
+        _board = make_board();
+
+    board = Board(_board);
 }
 
 
@@ -93,6 +99,11 @@ Cell* BoardHandler::getZero() const {
         }
 
     return cells[index];
+}
+
+
+bool BoardHandler::finish(void) {
+    return board == final;
 }
 
 

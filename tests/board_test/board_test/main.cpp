@@ -1,3 +1,5 @@
+#include <cassert>
+
 #include <QCoreApplication>
 #include <QtCore/QList>
 
@@ -16,10 +18,8 @@ int main() {
     Board board(_board);
     cout << board << endl;
 
-    for(int i = 0; i < 3; i++) {
-        for(int j = 0; j < 3; j++) {
-            cout << board[i][j];
-        }
-        cout << endl;
-    }
+    Board final;
+    cout << final;
+
+    assert(final == board);
 }
