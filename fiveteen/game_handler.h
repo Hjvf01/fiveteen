@@ -16,6 +16,7 @@ using std::ostream;
 #include "board_builder.h"
 #include "cell_control.h"
 #include "game_control.h"
+#include "board_control.h"
 #include "cell.h"
 #include "board_maker.h"
 
@@ -35,6 +36,8 @@ class BoardHandler : public QObject {
     QQuickView* view;
     QQuickItem* root;
     QQmlEngine* engine;
+
+    BoardControl* control;
 
     Board board;
     Board final;
@@ -60,6 +63,12 @@ public:
 private:
     int findRow(int number) const;
     int findCol(int number) const;
+    int smallestSize(void) const;
+    void scale(void);
+
+private slots:
+    void onHeightChange(int);
+    void onWidthChange(int);
 };
 
 
@@ -71,6 +80,7 @@ class GameHandler : public QObject {
     QQuickView* view;
     BoardHandler* board;
     GameControl* main_control;
+    QQuickItem* game_board;
 
     Cell* zero = nullptr;
 

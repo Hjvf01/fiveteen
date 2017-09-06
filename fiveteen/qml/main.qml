@@ -13,29 +13,65 @@ Item {
     height: 480
 
     Rectangle {
+        id: board
+        objectName: "board"
         color: "black"
-        anchors.fill: parent
+        width: 480
+        height: 480
 
         MouseArea {
+            id: mouseArea
             anchors.fill: parent
             onClicked: mouseClicked(mouse.x, mouse.y)
         }
     }
 
+    PropertyAnimation {
+        id: scaleWidth
+        target: board
+        properties: "width"
+        to: 0
+        duration: 0
+        alwaysRunToEnd: true
+    }
+
+    PropertyAnimation {
+        id: scaleHeight
+        target: board
+        properties: "height"
+        to: 0
+        duration: 0
+        alwaysRunToEnd: true
+    }
+
+    BoardControl {
+        id: boardControl
+        objectName: "boardControl"
+
+        onScale: {
+            scaleHeight.to = boardControl.size;
+            scaleWidth.to = boardControl.size;
+
+            scaleHeight.restart();
+            scaleWidth.restart();
+        }
+    }
+
     Popup {
         id: popup
-         x: 100
-         y: 100
-         width: 200
-         height: 300
-         modal: true
-         focus: true
-         TextArea {
-             anchors.fill: parent
-             text: "Game Over"
-             font.pointSize: 20
-             verticalAlignment: Text.AlignVCenter
-         }
+        x: 0
+        y: 0
+        width: boardControl.size
+        height: boardControl.size
+        modal: true
+        focus: true
+        TextArea {
+            id: gameOver
+            anchors.fill: parent
+            text: "Game Over\n"
+            font.pointSize: 20
+            verticalAlignment: Text.AlignVCenter
+        }
 
          closePolicy: Popup.OnEscape
     }
@@ -45,7 +81,10 @@ Item {
         objectName: "game_control"
 
         onFinish: {
-            console.log(amount);
+            gameControl.turn = amount;
+            popup.width = boardControl.size
+            popup.height = boardControl.size
+            gameOver.text += gameControl.turn
             popup.open();
         }
     }

@@ -9,11 +9,10 @@
 #include <QtQuick/QQuickPaintedItem>
 
 
-static const int CELL_SIZE = 120;   //px
-
-
 class Cell : public QQuickPaintedItem {
-    QRect cell;
+    static int cell_size;
+    static QRect cell;
+
     QString number;
     QColor color;
 
@@ -27,10 +26,19 @@ public:
 
     QString getNumber(void) const { return number; }
     bool isNull(void) const { return number == "0"; }
+
     QRect cellRect(void) const {
         return QRect(
-            x(), y(), CELL_SIZE, CELL_SIZE
+            x(), y(), cell_size, cell_size
         );
+    }
+
+    static int getSize(void) { return cell_size; }
+
+    static void setSize(int size) {
+        cell_size = size;
+        cell.setWidth(size);
+        cell.setHeight(size);
     }
 
     void paint(QPainter *painter) override;

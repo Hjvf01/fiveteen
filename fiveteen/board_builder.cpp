@@ -27,8 +27,8 @@ QList<Cell*> BoardBuilder::build(const Board &board) const {
         for(int j = 0; j < board.width(); j++) {
             Cell* cell_obj = static_cast<Cell*>(cell->create());
             cell_obj->setNumber(board[i][j]);
-            cell_obj->setX(j * CELL_SIZE);
-            cell_obj->setY(i * CELL_SIZE);
+            cell_obj->setX(j * Cell::getSize());
+            cell_obj->setY(i * Cell::getSize());
             result.append(cell_obj);
         }
     }

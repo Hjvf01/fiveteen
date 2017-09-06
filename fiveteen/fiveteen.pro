@@ -9,7 +9,8 @@ SOURCES += main.cpp \
     board.cpp \
     board_builder.cpp \
     cell.cpp \
-    board_maker.cpp
+    board_maker.cpp \
+    cell_control.cpp
 
 RESOURCES += qml.qrc
 
@@ -42,4 +43,5 @@ HEADERS += \
     game_handler.h \
     cell_control.h \
     board_maker.h \
-    game_control.h
+    game_control.h \
+    board_control.h

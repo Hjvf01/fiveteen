@@ -5,8 +5,11 @@ BoardHandler::BoardHandler(QQuickView *_view) :
         QObject(),
         view(_view),
         root(view->rootObject()),
-        engine(view->engine())
+        engine(view->engine()),
+        control(root->findChild<BoardControl*>("boardControl"))
 {
+    assert(control != nullptr);
+
     builder.setBuilder(engine);
 
     QList<QList<int>> _board = make_board();
@@ -14,6 +17,13 @@ BoardHandler::BoardHandler(QQuickView *_view) :
         _board = make_board();
 
     board = Board(_board);
+
+    connect(
+        view, &QQuickView::heightChanged, this, &BoardHandler::onHeightChange
+    );
+    connect(
+        view, &QQuickView::widthChanged, this, &BoardHandler::onWidthChange
+    );
 }
 
 
@@ -105,6 +115,49 @@ Cell* BoardHandler::getZero() const {
 bool BoardHandler::finish(void) {
     return board == final;
 }
+
+
+int BoardHandler::smallestSize() const {
+    int size = 0;
+
+    if(view->height() < view->width())
+        size = view->height();
+    else
+        size = view->width();
+
+    while(size % 4 != 0)
+        size--;
+
+    assert((size % 4) == 0);
+    return size;
+}
+
+
+void BoardHandler::scale() {
+    int size = smallestSize();
+    control->setSize(size);
+
+    Cell::setSize(size / 4);
+    CellControl::setStep(size / 4);
+
+    for(Cell* cell: cells) {
+        CellControl* _control = cell->findChild<CellControl*>("control");
+        assert(control != nullptr);
+        emit _control->scale();
+
+        int row = findRow(cell->getNumber().toInt()),
+            col = findCol(cell->getNumber().toInt());
+
+        cell->setX(col * Cell::getSize());
+        cell->setY(row * Cell::getSize());
+    }
+
+    emit control->scale();
+}
+
+
+void BoardHandler::onHeightChange(int) { scale(); }
+void BoardHandler::onWidthChange(int) { scale(); }
 
 
 void BoardHandler::swap(Cell *selected, Cell *zero) {

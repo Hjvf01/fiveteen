@@ -8,20 +8,15 @@ GameHandler::GameHandler(QQuickView *_view) :
         board(new BoardHandler(_view)),
         main_control(
             view->rootObject()->findChild<GameControl*>("game_control")
-        )
+        ),
+        game_board(view->rootObject()->findChild<QQuickItem*>("board"))
 {
     assert(main_control != nullptr);
+    assert(game_board != nullptr);
 
     connect(
         view->rootObject(), SIGNAL(mouseClicked(int, int)),
         this, SLOT(onMouseClicked(int,int))
-    );
-
-    connect(
-        view, &QQuickView::heightChanged, [](int h) { qDebug() << h; }
-    );
-    connect(
-        view, &QQuickView::widthChanged, [](int w) { qDebug() << w; }
     );
 }
 

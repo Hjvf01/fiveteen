@@ -15,10 +15,10 @@ class CellControl : public QObject {
         NOTIFY durationChanged
     )
 
-    Q_PROPERTY(int step READ getStep)
+    Q_PROPERTY(int step READ getStep WRITE setStep)
 
-    int _duration = 200;
-    const int _step = 120;
+    static int _duration;
+    static int _step;
 
 signals:
     void moveUp(void);
@@ -26,17 +26,16 @@ signals:
     void moveDown(void);
     void moveRight(void);
 
-    void select(void);
-    void unSelect(void);
+    void scale(void);
 
     void durationChanged(int d);
 
 public:
-    int getDuration(void) const { return _duration; }
-    int getStep(void) const { return _step; }
+    static int getDuration(void) { return _duration; }
+    static int getStep(void) { return _step; }
 
-    void setDuration(int d) { _duration = d; }
+    static void setStep(int s) { _step = s; }
+    static void setDuration(int d) { _duration = d; }
 };
-
 
 #endif // CELL_CONTROL_H

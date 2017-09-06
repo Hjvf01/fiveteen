@@ -43,6 +43,23 @@ Cell {
         alwaysRunToEnd: true
     }
 
+    PropertyAnimation {
+        id: scaleWidth
+        target: cell
+        properties: "width"
+        to: 0
+        duration: 0
+        alwaysRunToEnd: true
+    }
+
+    PropertyAnimation {
+        id: scaleHeight
+        target: cell
+        properties: "height"
+        to: 0
+        duration: 0
+        alwaysRunToEnd: true
+    }
 
     CellControl {
         id: control
@@ -66,6 +83,14 @@ Cell {
         onMoveRight: {
             moveRight.to = cell.x - control.step;
             moveRight.restart();
+        }
+
+        onScale: {
+            scaleHeight.to = control.step;
+            scaleWidth.to = control.step;
+
+            scaleHeight.restart();
+            scaleWidth.restart();
         }
     }
 }

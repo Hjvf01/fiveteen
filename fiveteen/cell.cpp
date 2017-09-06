@@ -1,16 +1,20 @@
 #include "cell.h"
 
 
+int Cell::cell_size = 120;
+QRect Cell::cell = QRect();
+
+
 Cell::Cell(QQuickItem *parent) :
         QQuickPaintedItem(parent),
         number("0"),
         color(QColor(255, 175, 0))
 {
-    cell.setWidth(CELL_SIZE);
-    cell.setHeight(CELL_SIZE);
+    cell.setWidth(cell_size);
+    cell.setHeight(cell_size);
 
-    setWidth(CELL_SIZE);
-    setHeight(CELL_SIZE);
+    setWidth(cell_size);
+    setHeight(cell_size);
 }
 
 
@@ -24,7 +28,7 @@ void Cell::paint(QPainter *painter) {
 
         painter->setBrush(QBrush(Qt::black));
         QFont font = painter->font();
-        font.setPixelSize(CELL_SIZE - 15);
+        font.setPixelSize(cell_size - 15);
         painter->setFont(font);
         painter->drawText(cell, Qt::AlignCenter, number);
     }

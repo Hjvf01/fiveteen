@@ -3,16 +3,7 @@
 #include <QQuickView>
 #include <QQmlEngine>
 
-/*
-#include "cell.h"
-#include "board.h"
-#include "board_builder.h"
-#include "game_handler.h"
-#include "cell_control.h"
-#include "game_control.h"
-*/
-
-#include "game_control.h"
+//#include "game_control.h"
 #include "game_handler.h"
 
 int main(int argc, char *argv[]) {
@@ -20,6 +11,7 @@ int main(int argc, char *argv[]) {
 
     qmlRegisterType<Cell>("Cells", 1, 0, "Cell");
     qmlRegisterType<CellControl>("Controls", 1, 0, "CellControl");
+    qmlRegisterType<BoardControl>("Controls", 1, 0, "BoardControl");
     qmlRegisterType<GameControl>("Controls", 1, 0, "GameControl");
 
     QQuickView view;

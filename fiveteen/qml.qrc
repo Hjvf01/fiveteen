@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>qml/main.qml</file>
         <file>qml/cell.qml</file>
+        <file>qml/scores.qml</file>
     </qresource>
 </RCC>
