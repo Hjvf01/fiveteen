@@ -64,14 +64,15 @@ int findAmount(const QList<QList<int> > &board, int num) {
     int num_row = findRow(board, num);
 
     for(int i = num_row; i < board.size(); i++) {
-        if(i == num_row)
+        if(i == num_row) {
             for(int j = findCol(board, num); j < board[i].size(); j++)
                 if(board[i][j] != 0 && board[i][j] < num)
                     ++amount;
-        else
+        } else {
             for(int j = 0; j < board[i].size(); j++)
                 if(board[i][j] != 0 && board[i][j] < num)
                     ++amount;
+        }
     }
 
     return amount;

@@ -22,6 +22,7 @@ Cell::~Cell() {}
 
 
 void Cell::paint(QPainter *painter) {
+    qDebug() << __PRETTY_FUNCTION__;
     if(number != "0") {
         painter->setBrush(QBrush(color));
         painter->drawRect(cell);

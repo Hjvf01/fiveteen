@@ -22,14 +22,16 @@ BoardHandler::BoardHandler(QQuickView *_view) :
 
 
 BoardHandler::~BoardHandler() {
-    clear();
+    for(Cell* cell: cells) delete cell;
 }
 
 
 void BoardHandler::clear() {
-    for(Cell* cell: cells)
+    for(Cell* cell: cells) {
         delete cell;
+    }
     cells.clear();
+    board = Board(make_board());
 
     assert(cells.size() == 0);
 }

@@ -6,6 +6,7 @@ import Qt.labs.controls 1.0
 import Cells 1.0
 import Controls 1.0
 
+
 Item {
     signal mouseClicked(int x, int y)
     signal restart()
@@ -13,6 +14,8 @@ Item {
     visible: true
     width: 480
     height: 480
+
+    focus: true
 
     Rectangle {
         id: board
@@ -24,8 +27,15 @@ Item {
         MouseArea {
             id: mouseArea
             anchors.fill: parent
-            onClicked: mouseClicked(mouse.x, mouse.y)
+            onClicked: {
+                mouseClicked(mouse.x, mouse.y)
+            }
         }
+    }
+
+    Keys.onReleased: {
+        console.log("ok");
+        restart();
     }
 
     PropertyAnimation {

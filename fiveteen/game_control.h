@@ -9,9 +9,6 @@ class GameControl : public QObject {
 
     Q_PROPERTY(int turn READ getTurns WRITE setTurns NOTIFY turnChanged)
 
-    int _height = 480;
-    int _width = 640;
-
     int turn = 0;
 
 public:
