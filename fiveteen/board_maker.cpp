@@ -1,11 +1,7 @@
 #include "board_maker.h"
 
 
-QList<QList<int>> make_board() {
-    random_device rd;
-    mt19937 gen(rd());
-    uniform_int_distribution<int> distrub(0, 3);
-
+QList<QList<int>> make(mt19937& gen, uniform_int_distribution<int>& distrub) {
     QList<QList<int>> result = {
         { 1,  2,  3,  4},
         { 5,  6,  7,  8},
@@ -18,18 +14,27 @@ QList<QList<int>> make_board() {
     for(QList<int>& row: result)
         shuffle(row.begin(), row.end(), gen);
 
-    for(int i = 0; i < 5; i++) {
-        int random_row_fst = distrub(gen),
-            random_col_fst = distrub(gen);
-
-        int random_row_scd = distrub(gen),
-            random_col_scd = distrub(gen);
-
+    for(int i = 0; i < 10; i++)
         swap(
-            result[random_row_fst][random_col_fst],
-            result[random_row_scd][random_col_scd]
+            result[distrub(gen)][distrub(gen)],
+            result[distrub(gen)][distrub(gen)]
         );
-    }
+
+    return result;
+}
+
+
+QList<QList<int>> make_board() {
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<int> distrub(0, 3);
+
+    auto result = make(gen, distrub);
+
+    while(! solvable(result))
+        result = make(gen, distrub);
+
+    assert(solvable(result) == true);
 
     return result;
 }
@@ -59,15 +64,14 @@ int findAmount(const QList<QList<int> > &board, int num) {
     int num_row = findRow(board, num);
 
     for(int i = num_row; i < board.size(); i++) {
-        if(i == num_row) {
+        if(i == num_row)
             for(int j = findCol(board, num); j < board[i].size(); j++)
                 if(board[i][j] != 0 && board[i][j] < num)
                     ++amount;
-        } else {
+        else
             for(int j = 0; j < board[i].size(); j++)
                 if(board[i][j] != 0 && board[i][j] < num)
                     ++amount;
-        }
     }
 
     return amount;
@@ -83,7 +87,7 @@ bool solvable(const QList<QList<int>> &board) {
     int sum = 0;
     int e = findRow(board, 0) + 1;
 
-    assert(e != -1);
+    assert(e != 0);
 
     for(int elem: {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}) {
         sum += findAmount(board, elem) + e;

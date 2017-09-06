@@ -1,5 +1,6 @@
 import QtQuick 2.5
 import QtQuick.Window 2.0
+import QtQuick.Layouts 1.1
 import Qt.labs.controls 1.0
 
 import Cells 1.0
@@ -7,6 +8,7 @@ import Controls 1.0
 
 Item {
     signal mouseClicked(int x, int y)
+    signal restart()
 
     visible: true
     width: 480
@@ -65,15 +67,23 @@ Item {
         height: boardControl.size
         modal: true
         focus: true
+        closePolicy: Popup.OnEscape
+
         TextArea {
             id: gameOver
             anchors.fill: parent
-            text: "Game Over\n"
+            text: "Game Over!!!("
             font.pointSize: 20
             verticalAlignment: Text.AlignVCenter
         }
-
-         closePolicy: Popup.OnEscape
+        Button {
+            id: restartButton
+            text: "Restart"
+            onClicked: {
+                restart();
+                popup.close();
+            }
+        }
     }
 
     GameControl {
@@ -82,9 +92,10 @@ Item {
 
         onFinish: {
             gameControl.turn = amount;
-            popup.width = boardControl.size
-            popup.height = boardControl.size
-            gameOver.text += gameControl.turn
+            popup.width = boardControl.size;
+            popup.height = boardControl.size;
+            gameOver.text += gameControl.turn + " turns)";
+            gameOver.font.pointSize = boardControl.size / 20
             popup.open();
         }
     }

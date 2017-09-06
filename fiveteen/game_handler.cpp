@@ -18,6 +18,10 @@ GameHandler::GameHandler(QQuickView *_view) :
         view->rootObject(), SIGNAL(mouseClicked(int, int)),
         this, SLOT(onMouseClicked(int,int))
     );
+    connect(
+        view->rootObject(), SIGNAL(restart()),
+        this, SLOT(onRestart())
+    );
 }
 
 
@@ -79,4 +83,11 @@ void GameHandler::move(Cell* selected) {
     if(board->finish()) {
         emit main_control->finish(amount);
     }
+}
+
+
+void GameHandler::onRestart() {
+    qDebug() << __PRETTY_FUNCTION__;
+    board->clear();
+    initBoard();
 }

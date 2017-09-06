@@ -15,6 +15,7 @@ using std::uniform_int_distribution;
 #include <QtCore/QDebug>
 
 QList<QList<int>> make_board(void);
+QList<QList<int>> make(mt19937& gen, uniform_int_distribution<int>& distrub);
 
 int findRow(const QList<QList<int>>& board, int num);
 int findCol(const QList<QList<int>>& board, int num);

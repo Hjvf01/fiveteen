@@ -6,18 +6,12 @@ BoardHandler::BoardHandler(QQuickView *_view) :
         view(_view),
         root(view->rootObject()),
         engine(view->engine()),
-        control(root->findChild<BoardControl*>("boardControl"))
+        control(root->findChild<BoardControl*>("boardControl")),
+        board(Board(make_board()))
 {
     assert(control != nullptr);
 
     builder.setBuilder(engine);
-
-    QList<QList<int>> _board = make_board();
-    while(! solvable(_board))
-        _board = make_board();
-
-    board = Board(_board);
-
     connect(
         view, &QQuickView::heightChanged, this, &BoardHandler::onHeightChange
     );
@@ -28,8 +22,16 @@ BoardHandler::BoardHandler(QQuickView *_view) :
 
 
 BoardHandler::~BoardHandler() {
+    clear();
+}
+
+
+void BoardHandler::clear() {
     for(Cell* cell: cells)
         delete cell;
+    cells.clear();
+
+    assert(cells.size() == 0);
 }
 
 

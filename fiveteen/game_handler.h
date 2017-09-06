@@ -57,6 +57,7 @@ public:
     Cell* getZero(void) const;
 
     void swap(Cell* selected, Cell* zero);
+    void clear(void);
 
     bool finish(void);
 
@@ -92,6 +93,7 @@ public:
 
 public slots:
     void onMouseClicked(int x, int y);
+    void onRestart(void);
 
 private:
     void move(Cell* selected);
