@@ -64,7 +64,7 @@ public:
 private:
     int findRow(int number) const;
     int findCol(int number) const;
-    int smallestSize(void) const;
+    int smallestSize(int s) const;
     void scale(void);
 
 private slots:

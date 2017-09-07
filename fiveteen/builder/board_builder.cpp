@@ -19,19 +19,21 @@ void BoardBuilder::setBuilder(QQmlEngine *engine) {
 
 
 QList<Cell*> BoardBuilder::build(const Board &board) const {
-    if(cell == nullptr)
-        throw "Cell didnt init";
+    qDebug() << __PRETTY_FUNCTION__;
+
+    assert(cell != nullptr);
 
     QList<Cell*> result;
     for(int i = 0; i < board.height(); i++) {
         for(int j = 0; j < board.width(); j++) {
             Cell* cell_obj = static_cast<Cell*>(cell->create());
             cell_obj->setNumber(board[i][j]);
-            cell_obj->setX(j * Cell::getSize());
-            cell_obj->setY(i * Cell::getSize());
+            cell_obj->setX(j * Cell::getWidth());
+            cell_obj->setY(i * Cell::getHeight());
             result.append(cell_obj);
         }
     }
 
+    assert(result.size() == 16);
     return result;
 }

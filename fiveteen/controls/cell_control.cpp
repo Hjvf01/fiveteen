@@ -1,5 +1,7 @@
 #include "cell_control.h"
 
 
-int CellControl::_duration = 200;
-int CellControl::_step = 120;
+int CellControl::durationX = 200;
+int CellControl::durationY = 200;
+int CellControl::stepX = 120;
+int CellControl::stepY = 120;

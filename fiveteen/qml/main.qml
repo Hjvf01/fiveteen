@@ -11,6 +11,7 @@ Item {
     signal mouseClicked(int x, int y)
     signal restart()
 
+    id: mainWindow
     visible: true
     width: 480
     height: 480
@@ -60,12 +61,14 @@ Item {
         id: boardControl
         objectName: "boardControl"
 
-        onScale: {
-            scaleHeight.to = boardControl.size;
-            scaleWidth.to = boardControl.size;
-
-            scaleHeight.restart();
+        onScaleWidth: {
+            scaleWidth.to = boardControl.width;
             scaleWidth.restart();
+        }
+
+        onScaleHeight: {
+            scaleHeight.to = boardControl.height;
+            scaleHeight.restart();
         }
     }
 
@@ -73,12 +76,12 @@ Item {
         id: popup
         x: 0
         y: 0
-        width: boardControl.size
-        height: boardControl.size
+        width: boardControl.width
+        height: boardControl.height
         modal: true
         focus: true
         closePolicy: Popup.OnEscape
-
+        /*
         TextArea {
             id: gameOver
             anchors.fill: parent
@@ -92,7 +95,7 @@ Item {
                 restart();
                 popup.close();
             }
-        }
+        }*/
     }
 
     GameControl {
@@ -101,10 +104,15 @@ Item {
 
         onFinish: {
             gameControl.turn = amount;
-            popup.width = boardControl.size;
-            popup.height = boardControl.size;
+            popup.width = boardControl.width;
+            popup.height = boardControl.height;
             gameOver.text = "Game Over!!!(" + gameControl.turn + " turns)";
-            gameOver.font.pointSize = boardControl.size / 20
+
+            if(boardControl.height < boardControl.width)
+                gameOver.font.pointSize = boardControl.height / 20;
+            else
+                gameOver.font.pointSize = boardControl.width / 20;
+
             popup.open();
         }
     }

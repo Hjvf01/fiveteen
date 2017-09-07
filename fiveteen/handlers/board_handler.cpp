@@ -10,6 +10,8 @@ BoardHandler::BoardHandler(QQuickView *_view) :
         board(Board(make_board()))
 {
     assert(control != nullptr);
+    assert(root != nullptr);
+    assert(engine != nullptr);
 
     builder.setBuilder(engine);
     connect(
@@ -41,6 +43,10 @@ void BoardHandler::init() {
     cells = builder.build(board);
 
     for(Cell* cell: cells) {
+        cell->_setWidth(control->getWidth() / 4);
+        cell->_setHeight(control->getHeight() / 4);
+        cell->setWidth(control->getWidth() / 4);
+        cell->setHeight(control->getHeight() / 4);
         cell->setParentItem(root);
         cell->setParent(view);
     }
@@ -121,47 +127,54 @@ bool BoardHandler::finish(void) {
 }
 
 
-int BoardHandler::smallestSize() const {
-    int size = 0;
-
-    if(view->height() < view->width())
-        size = view->height();
-    else
-        size = view->width();
-
+int BoardHandler::smallestSize(int size) const {
     while(size % 4 != 0)
         size--;
-
     assert((size % 4) == 0);
     return size;
 }
 
 
-void BoardHandler::scale() {
-    int size = smallestSize();
-    control->setSize(size);
+void BoardHandler::onHeightChange(int) {
+    int size = smallestSize(view->height());
+    control->setHeight(size);
 
-    Cell::setSize(size / 4);
-    CellControl::setStep(size / 4);
+    Cell::_setHeight(size / 4);
+    CellControl::setStepY(size / 4);
 
     for(Cell* cell: cells) {
         CellControl* _control = cell->findChild<CellControl*>("control");
-        assert(control != nullptr);
-        emit _control->scale();
+        assert(_control != nullptr);
 
-        int row = findRow(cell->getNumber().toInt()),
-            col = findCol(cell->getNumber().toInt());
+        emit _control->scaleHeight();
 
-        cell->setX(col * Cell::getSize());
-        cell->setY(row * Cell::getSize());
+        cell->setX(findCol(cell->getNumber().toInt()) * Cell::getWidth());
+        cell->setY(findRow(cell->getNumber().toInt()) * Cell::getHeight());
     }
 
-    emit control->scale();
+    emit control->scaleHeight();
 }
 
 
-void BoardHandler::onHeightChange(int) { scale(); }
-void BoardHandler::onWidthChange(int) { scale(); }
+void BoardHandler::onWidthChange(int) {
+    int size = smallestSize(view->width());
+    control->setWidth(size);
+
+    Cell::_setWidth(size / 4);
+    CellControl::setStepX(size / 4);
+
+    for(Cell* cell: cells) {
+        CellControl* _control = cell->findChild<CellControl*>("control");
+        assert(_control != nullptr);
+
+        emit _control->scaleWidth();
+
+        cell->setX(findCol(cell->getNumber().toInt()) * Cell::getWidth());
+        cell->setY(findRow(cell->getNumber().toInt()) * Cell::getHeight());
+    }
+
+    emit control->scaleWidth();
+}
 
 
 void BoardHandler::swap(Cell *selected, Cell *zero) {

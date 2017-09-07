@@ -12,7 +12,7 @@ Cell {
         target: cell
         properties: "y"
         to: 0
-        duration: control.duration
+        duration: control.durationY
         alwaysRunToEnd: true
     }
 
@@ -21,7 +21,7 @@ Cell {
         target: cell
         properties: "x"
         to: 0
-        duration: control.duration
+        duration: control.durationX
         alwaysRunToEnd: true
     }
 
@@ -30,7 +30,7 @@ Cell {
         target: cell
         properties: "y"
         to: 0
-        duration: control.duration
+        duration: control.durationY
         alwaysRunToEnd: true
     }
 
@@ -39,7 +39,7 @@ Cell {
         target: cell
         properties: "x"
         to: 0
-        duration: control.duration
+        duration: control.durationX
         alwaysRunToEnd: true
     }
 
@@ -66,30 +66,32 @@ Cell {
         objectName: "control"
 
         onMoveUp: {
-            moveUp.to = cell.y - control.step;
+            moveUp.to = cell.y - control.stepY;
             moveUp.restart();
         }
 
         onMoveLeft: {
-            moveLeft.to = cell.x + control.step;
+            moveLeft.to = cell.x + control.stepX;
             moveLeft.restart();
         }
 
         onMoveDown: {
-            moveDown.to = cell.y + control.step
+            moveDown.to = cell.y + control.stepY;
             moveDown.restart();
         }
 
         onMoveRight: {
-            moveRight.to = cell.x - control.step;
+            moveRight.to = cell.x - control.stepX;
             moveRight.restart();
         }
 
-        onScale: {
-            scaleHeight.to = control.step;
-            scaleWidth.to = control.step;
-
+        onScaleHeight: {
+            scaleHeight.to = control.stepY;
             scaleHeight.restart();
+        }
+
+        onScaleWidth: {
+            scaleWidth.to = control.stepX;
             scaleWidth.restart();
         }
     }

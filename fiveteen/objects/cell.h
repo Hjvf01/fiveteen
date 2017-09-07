@@ -10,7 +10,8 @@
 
 
 class Cell : public QQuickPaintedItem {
-    static int cell_size;
+    static int cell_height;
+    static int cell_width;
     static QRect cell;
 
     QString number;
@@ -29,16 +30,21 @@ public:
 
     QRect cellRect(void) const {
         return QRect(
-            x(), y(), cell_size, cell_size
+            x(), y(), cell_width, cell_height
         );
     }
 
-    static int getSize(void) { return cell_size; }
+    static int getHeight(void) { return cell_height; }
+    static int getWidth(void) { return cell_width; }
 
-    static void setSize(int size) {
-        cell_size = size;
-        cell.setWidth(size);
-        cell.setHeight(size);
+    static void _setHeight(int h) {
+        cell_height = h;
+        cell.setHeight(h);
+    }
+
+    static void _setWidth(int w) {
+        cell_width = w;
+        cell.setWidth(w);
     }
 
     void paint(QPainter *painter) override;

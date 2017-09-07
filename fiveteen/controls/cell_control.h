@@ -9,16 +9,26 @@ class CellControl : public QObject {
     Q_OBJECT
 
     Q_PROPERTY(
-        int duration
-        READ getDuration
-        WRITE setDuration
-        NOTIFY durationChanged
+        int durationX
+        READ getDurationX
+        WRITE setDurationX
+        NOTIFY durationXChanged
     )
 
-    Q_PROPERTY(int step READ getStep WRITE setStep)
+    Q_PROPERTY(
+        int durationY
+        READ getDurationY
+        WRITE setDurationX
+        NOTIFY durationYChanged
+    )
 
-    static int _duration;
-    static int _step;
+    Q_PROPERTY(int stepX READ getStepX WRITE setStepX)
+    Q_PROPERTY(int stepY READ getStepY WRITE setStepY)
+
+    static int durationX;
+    static int durationY;
+    static int stepX;
+    static int stepY;
 
 signals:
     void moveUp(void);
@@ -26,16 +36,22 @@ signals:
     void moveDown(void);
     void moveRight(void);
 
-    void scale(void);
+    void scaleHeight(void);
+    void scaleWidth(void);
 
-    void durationChanged(int d);
+    void durationXChanged(int d);
+    void durationYChanged(int d);
 
 public:
-    static int getDuration(void) { return _duration; }
-    static int getStep(void) { return _step; }
+    static int getDurationX(void) { return durationX; }
+    static int getDurationY(void) { return durationY; }
+    static int getStepX(void) { return stepX; }
+    static int getStepY(void) { return stepY; }
 
-    static void setStep(int s) { _step = s; }
-    static void setDuration(int d) { _duration = d; }
+    static void setStepX(int s) { stepX = s; }
+    static void setStepY(int s) { stepY = s; }
+    static void setDurationX(int d) { durationX = d; }
+    static void setDurationY(int d) { durationY = d; }
 };
 
 #endif // CELL_CONTROL_H
