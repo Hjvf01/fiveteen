@@ -15,8 +15,13 @@ Item {
     visible: true
     width: 480
     height: 480
-
     focus: true
+
+    Keys.onReleased: {
+        if(event.key == Qt.Key_Space) {
+            startGame.open();
+        }
+    }
 
     Rectangle {
         id: board
@@ -34,14 +39,8 @@ Item {
         }
     }
 
-    Keys.onReleased: {
-        console.log("restart");
-        restart();
-    }
-
     PropertyAnimation {
         id: scaleWidth
-        target: board
         properties: "width"
         to: 0
         duration: 0
@@ -50,7 +49,6 @@ Item {
 
     PropertyAnimation {
         id: scaleHeight
-        target: board
         properties: "height"
         to: 0
         duration: 0
@@ -62,40 +60,122 @@ Item {
         objectName: "boardControl"
 
         onScaleWidth: {
+            scaleWidth.target = board;
             scaleWidth.to = boardControl.width;
+            scaleWidth.restart();
+
+            scaleWidth.target = endGame;
+            scaleWidth.restart();
+
+            scaleWidth.target = startGame;
             scaleWidth.restart();
         }
 
         onScaleHeight: {
+            scaleHeight.target = board;
             scaleHeight.to = boardControl.height;
+            scaleHeight.restart();
+
+            scaleHeight.target = endGame;
+            scaleHeight.restart();
+
+            scaleHeight.target = startGame;
             scaleHeight.restart();
         }
     }
 
     Popup {
-        id: popup
+        id: startGame
         x: 0
         y: 0
-        width: boardControl.width
-        height: boardControl.height
+        width: 480
+        height: 480
         modal: true
-        focus: true
-        closePolicy: Popup.OnEscape
-        /*
-        TextArea {
-            id: gameOver
+        opacity: 0.9
+        closePolicy: Popup.NoAutoClose
+
+        ColumnLayout {
             anchors.fill: parent
-            font.pointSize: 20
-            verticalAlignment: Text.AlignVCenter
-        }
-        Button {
-            id: restartButton
-            text: "Restart"
-            onClicked: {
-                restart();
-                popup.close();
+
+            Button {
+                id: gameButton
+                Layout.alignment: Qt.AlignCenter
+                text: "Start"
+                Layout.preferredHeight: 40
+                Layout.preferredWidth: 300
+                onClicked: {
+                    gameButton.text = "Continue..."
+                    startGame.close();
+                }
             }
-        }*/
+            Button {
+                id: shuffleButton
+                Layout.alignment: Qt.AlignCenter
+                text: "Shuffle"
+                Layout.preferredHeight: 40
+                Layout.preferredWidth: 300
+                onClicked: {
+                    gameButton.text = "Start";
+                    restart();
+                }
+            }
+            Button {
+                id: exitButton
+                Layout.alignment: Qt.AlignCenter
+                text: "Exit"
+                Layout.preferredHeight: 40
+                Layout.preferredWidth: 300
+                onClicked: {
+                    Qt.quit();
+                }
+            }
+            TextArea {
+                Layout.alignment: Qt.AlignCenter
+                text: 'Press "space" for pause.'
+                font.pointSize: 10
+            }
+        }
+    }
+
+    Popup {
+        id: endGame
+        x: 0
+        y: 0
+        modal: true
+        opacity: 0.9
+        closePolicy: Popup.NoAutoClose
+
+        ColumnLayout {
+            anchors.fill: parent
+
+            TextArea {
+                Layout.alignment: Qt.AlignCenter
+                id: gameOver
+                verticalAlignment: Text.AlignVCenter
+            }
+            Button {
+                Layout.alignment: Qt.AlignCenter
+                Layout.preferredHeight: 40
+                Layout.preferredWidth: 300
+
+                id: restartButton
+                text: "Restart"
+                onClicked: {
+                    restart();
+                    endGame.close();
+                }
+            }
+            Button {
+                Layout.alignment: Qt.AlignCenter
+                Layout.preferredHeight: 40
+                Layout.preferredWidth: 300
+
+                text: "Exit"
+                onClicked: {
+                    Qt.quit();
+                }
+            }
+        }
     }
 
     GameControl {
@@ -104,16 +184,20 @@ Item {
 
         onFinish: {
             gameControl.turn = amount;
-            popup.width = boardControl.width;
-            popup.height = boardControl.height;
-            gameOver.text = "Game Over!!!(" + gameControl.turn + " turns)";
+            endGame.width = boardControl.width;
+            endGame.height = boardControl.height;
+            gameOver.text = "Game Over!!!(" + amount + " turns)";
 
             if(boardControl.height < boardControl.width)
                 gameOver.font.pointSize = boardControl.height / 20;
             else
                 gameOver.font.pointSize = boardControl.width / 20;
 
-            popup.open();
+            endGame.open();
+        }
+
+        onStart: {
+            startGame.open();
         }
     }
 }

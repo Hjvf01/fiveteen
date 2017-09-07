@@ -9,7 +9,7 @@ QRect Cell::cell = QRect();
 Cell::Cell(QQuickItem *parent) :
         QQuickPaintedItem(parent),
         number("0"),
-        color(QColor(255, 175, 0))
+        color(QColor(245, 245, 240))
 {
     cell.setWidth(120);
     cell.setHeight(120);
@@ -31,7 +31,7 @@ void Cell::paint(QPainter *painter) {
 
         painter->setBrush(QBrush(Qt::black));
         QFont font = painter->font();
-        font.setPixelSize(font_size - 5);
+        font.setPixelSize(font_size - 20);
         painter->setFont(font);
         painter->drawText(cell, Qt::AlignCenter, number);
     }

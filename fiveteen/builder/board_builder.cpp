@@ -19,8 +19,6 @@ void BoardBuilder::setBuilder(QQmlEngine *engine) {
 
 
 QList<Cell*> BoardBuilder::build(const Board &board) const {
-    qDebug() << __PRETTY_FUNCTION__;
-
     assert(cell != nullptr);
 
     QList<Cell*> result;
@@ -33,7 +31,5 @@ QList<Cell*> BoardBuilder::build(const Board &board) const {
             result.append(cell_obj);
         }
     }
-
-    assert(result.size() == 16);
     return result;
 }

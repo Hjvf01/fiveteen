@@ -22,6 +22,8 @@ GameHandler::GameHandler(QQuickView *_view) :
         view->rootObject(), SIGNAL(restart()),
         this, SLOT(onRestart())
     );
+
+    emit main_control->start();
 }
 
 
@@ -33,7 +35,6 @@ GameHandler::~GameHandler() {
 void GameHandler::initBoard(void) {
     board->init();
     zero = board->getZero();
-    //zero->findChild<CellControl*>("control")->setDurationX(Cell::getWidth() * 2);
 }
 
 
@@ -53,6 +54,7 @@ void GameHandler::move(Cell* selected) {
     assert(zero_control != nullptr);
 
     ++amount;
+    view->setTitle(QString::number(amount));
 
     auto direction = board->getDirection(selected->getNumber());
     switch(direction) {
@@ -88,6 +90,7 @@ void GameHandler::move(Cell* selected) {
 
 void GameHandler::onRestart() {
     amount = 0;
+    view->setTitle("new game");
     board->clear();
     initBoard();
 }

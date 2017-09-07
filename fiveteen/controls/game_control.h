@@ -18,6 +18,7 @@ public:
 
 signals:
     void finish(int amount);
+    void start(void);
 
     void turnChanged(int t);
 };

@@ -18,6 +18,11 @@ int main(int argc, char *argv[]) {
     view.setY(55);
     view.show();
 
+    QObject::connect(
+        view.engine(), SIGNAL(quit()),
+        QCoreApplication::instance(), SLOT(quit())
+    );
+
     GameHandler handler(&view);
     handler.initBoard();
 
