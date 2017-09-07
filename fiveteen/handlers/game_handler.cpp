@@ -33,7 +33,7 @@ GameHandler::~GameHandler() {
 void GameHandler::initBoard(void) {
     board->init();
     zero = board->getZero();
-    zero->findChild<CellControl*>("control")->setDuration(0);
+    zero->findChild<CellControl*>("control")->setDuration(Cell::getSize() * 2);
 }
 
 

@@ -33,7 +33,10 @@ Item {
         }
     }
 
-    Keys.onReleased: { restart(); }
+    Keys.onReleased: {
+        console.log("restart");
+        restart();
+    }
 
     PropertyAnimation {
         id: scaleWidth
@@ -79,7 +82,6 @@ Item {
         TextArea {
             id: gameOver
             anchors.fill: parent
-            text: "Game Over!!!("
             font.pointSize: 20
             verticalAlignment: Text.AlignVCenter
         }
@@ -101,7 +103,7 @@ Item {
             gameControl.turn = amount;
             popup.width = boardControl.size;
             popup.height = boardControl.size;
-            gameOver.text += gameControl.turn + " turns)";
+            gameOver.text = "Game Over!!!(" + gameControl.turn + " turns)";
             gameOver.font.pointSize = boardControl.size / 20
             popup.open();
         }
