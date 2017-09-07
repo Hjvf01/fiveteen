@@ -1,10 +1,8 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQuickView>
-#include <QQmlEngine>
 
-//#include "game_control.h"
-#include "game_handler.h"
+#include "handlers/handlers.h"
 
 int main(int argc, char *argv[]) {
     QGuiApplication app(argc, argv);

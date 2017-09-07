@@ -12,13 +12,13 @@ using std::ostream;
 #include <QQmlEngine>
 #include <QPoint>
 
-#include "board.h"
-#include "board_builder.h"
-#include "cell_control.h"
-#include "game_control.h"
-#include "board_control.h"
-#include "cell.h"
-#include "board_maker.h"
+#include "builder/board.h"
+#include "builder/board_maker.h"
+#include "builder/board_builder.h"
+#include "controls/cell_control.h"
+#include "controls/game_control.h"
+#include "controls/board_control.h"
+#include "objects/cell.h"
 
 
 enum class Direction {

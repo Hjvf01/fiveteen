@@ -1,4 +1,4 @@
-#include "game_handler.h"
+#include "handlers.h"
 
 
 GameHandler::GameHandler(QQuickView *_view) :
@@ -87,7 +87,7 @@ void GameHandler::move(Cell* selected) {
 
 
 void GameHandler::onRestart() {
-    qDebug() << __PRETTY_FUNCTION__;
+    amount = 0;
     board->clear();
     initBoard();
 }

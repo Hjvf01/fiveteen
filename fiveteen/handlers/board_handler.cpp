@@ -1,4 +1,4 @@
-#include "game_handler.h"
+#include "handlers.h"
 
 
 BoardHandler::BoardHandler(QQuickView *_view) :

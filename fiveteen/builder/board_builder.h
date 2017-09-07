@@ -7,7 +7,7 @@
 #include <QtCore/QUrl>
 #include <QtCore/QDebug>
 
-#include "cell.h"
+#include "../objects/cell.h"
 #include "board.h"
 
 

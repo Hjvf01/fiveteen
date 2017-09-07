@@ -28,15 +28,12 @@ Item {
             id: mouseArea
             anchors.fill: parent
             onClicked: {
-                mouseClicked(mouse.x, mouse.y)
+                mouseClicked(mouse.x, mouse.y);
             }
         }
     }
 
-    Keys.onReleased: {
-        console.log("ok");
-        restart();
-    }
+    Keys.onReleased: { restart(); }
 
     PropertyAnimation {
         id: scaleWidth

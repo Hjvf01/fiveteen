@@ -3,45 +3,38 @@ TEMPLATE = app
 QT += qml quick
 CONFIG += c++11
 
-SOURCES += main.cpp \
-    game_handler.cpp \
-    board_handler.cpp \
-    board.cpp \
-    board_builder.cpp \
-    cell.cpp \
-    board_maker.cpp \
-    cell_control.cpp
+SOURCES += main.cpp\
+    builder/board.cpp\
+    builder/board_builder.cpp\
+    builder/board_maker.cpp\
+    #
+    controls/cell_control.cpp\
+    #
+    handlers/game_handler.cpp\
+    handlers/board_handler.cpp\
+    #
+    objects/cell.cpp\
+
+HEADERS +=\
+    builder/board.h\
+    builder/board_builder.h\
+    builder/board_maker.h\
+    #
+    controls/board_control.h\
+    controls/cell_control.h\
+    controls/game_control.h\
+    #
+    objects/cell.h\
+    handlers/handlers.h
 
 RESOURCES += qml.qrc
 
-# Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
 
-# Additional import path used to resolve QML modules just for Qt Quick Designer
 QML_DESIGNER_IMPORT_PATH =
 
-# The following define makes your compiler emit warnings if you use
-# any feature of Qt which as been marked deprecated (the exact warnings
-# depend on your compiler). Please consult the documentation of the
-# deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
 
-# You can also make your code fail to compile if you use deprecated APIs.
-# In order to do so, uncomment the following line.
-# You can also select to disable deprecated APIs only up to a certain version of Qt.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
-
-# Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
-
-HEADERS += \
-    board.h \
-    cell.h \
-    board_builder.h \
-    game_handler.h \
-    cell_control.h \
-    board_maker.h \
-    game_control.h \
-    board_control.h
